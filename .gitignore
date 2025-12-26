@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# venv
+.venv/
+
+# outputs
+outputs/
+
+# local assets (원하면 샘플만 커밋)
+assets/videos/*.mp4
+samples/videos/*.mp4
+!samples/videos/sample.mp4
+
+# OS/IDE
+.DS_Store
+.vscode/
+.idea/
