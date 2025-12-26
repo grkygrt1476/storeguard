@@ -1,0 +1,17 @@
+# --- D1~D2 core ---
+opencv-python
+numpy
+loguru
+pydantic
+ultralytics
+
+# --- D3 ONNX ---
+onnx
+
+# OS별 런타임 분기 (macOS=CPU, Linux/WSL=GPU)
+onnxruntime; platform_system != "Linux"
+onnxruntime-gpu; platform_system == "Linux"
+
+# 개발도구
+ruff
+pytest
