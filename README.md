@@ -35,3 +35,7 @@ python scripts/demo_video.py
 Intrusion rule: if "head-point" (bbox center at 20% height) enters ROI rectangle, trigger event with cooldown.
 ![D2 intrusion](assets/images/storeguard_d2_intrusion.jpg)
 
+## ONNX Smoke Test (WSL GPU)
+```bash
+./scripts/run_onnx.sh scripts/onnx_smoke.py
+./scripts/run_onnx.sh -c "import onnxruntime as ort; print(ort.get_available_providers())"
