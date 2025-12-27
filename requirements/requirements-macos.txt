@@ -48,7 +48,7 @@ mpmath==1.3.0
     # via sympy
 networkx==3.4.2
     # via torch
-numpy==2.2.6
+numpy==1.26.4
     # via
     #   -r requirements/requirements.in
     #   contourpy
@@ -65,7 +65,7 @@ onnx==1.20.0
     # via -r requirements/requirements.in
 onnxruntime==1.23.2 ; platform_system != "Linux"
     # via -r requirements/requirements.in
-opencv-python==4.12.0.88
+opencv-python==4.11.0.86
     # via
     #   -r requirements/requirements.in
     #   ultralytics

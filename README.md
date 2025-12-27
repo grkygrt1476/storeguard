@@ -24,3 +24,14 @@ python scripts/demo_video.py
 - s: save screenshot to assets/images/storeguard_d1_video_loop.jpg
 
 ![D1 video loop](assets/images/storeguard_d1_video_loop.jpg)
+
+## Demo (D2 Intrusion Event)
+```bash
+python scripts/demo_video.py
+```
+- q: quit
+- s: save screenshot (e.g., assets/images/storeguard_d2_intrusion.jpg)
+
+Intrusion rule: if "head-point" (bbox center at 20% height) enters ROI rectangle, trigger event with cooldown.
+![D2 intrusion](assets/images/storeguard_d2_intrusion.jpg)
+
