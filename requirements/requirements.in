@@ -1,6 +1,6 @@
 # --- D1~D2 core ---
-opencv-python
-numpy
+opencv-python==4.11.0.86
+numpy==1.26.4
 loguru
 pydantic
 ultralytics
@@ -15,3 +15,4 @@ onnxruntime-gpu; platform_system == "Linux"
 # 개발도구
 ruff
 pytest
+

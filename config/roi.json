@@ -1,0 +1,7 @@
+{
+  "frame_size": { "w": 380, "h": 720 },
+  "rois": [
+    { "id": "orange_zone_wide",  "x1": 35, "y1": 410, "x2": 230, "y2": 590 },
+    { "id": "orange_zone_tight", "x1": 55, "y1": 450, "x2": 205, "y2": 565 }
+  ]
+}
