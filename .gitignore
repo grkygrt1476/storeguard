@@ -19,3 +19,6 @@ samples/videos/*.mp4
 .DS_Store
 .vscode/
 .idea/
+
+# raw sample videos (keep local only)
+samples/raw/
