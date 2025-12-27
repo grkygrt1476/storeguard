@@ -83,11 +83,19 @@ while True:
         else:
             cv2.circle(frame, (cx, cy), 4, (0, 255, 255), -1)
 
-    # FPS overlay는 마지막에 얹어도 됨
+    # FPS overlay
     cv2.putText(frame, f"FPS: {fps:.1f}", (20, 35),
                 cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255), 2, cv2.LINE_AA)
 
-    if intruded:
+    now_t = time.perf_counter()
+
+    # intrusion 이벤트 발생 시각 갱신(쿨다운)
+    if intruded and (now_t - last_intrusion_t) >= cooldown_s:
+        last_intrusion_t = now_t
+        print(f"[INTRUSION] roi={roi['id']} t={now_t:.2f}")
+
+    # 최근 이벤트 후 0.8초 동안만 경고 표시
+    if (now_t - last_intrusion_t) < 0.8:
         cv2.putText(frame, "INTRUSION!", (20, 80),
                     cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3, cv2.LINE_AA)
 
