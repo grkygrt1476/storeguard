@@ -1,0 +1,85 @@
+
+=============================
+== Triton Inference Server ==
+=============================
+
+NVIDIA Release 25.12 (build 246541503)
+Triton Server Version 2.64.0
+
+Copyright (c) 2018-2025, NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+
+WARNING: CUDA Minor Version Compatibility mode ENABLED.
+  Using driver version 581.80 which has support for CUDA 13.0.  This container
+  was built with CUDA 13.1 and will be run in Minor Version Compatibility mode.
+  CUDA Forward Compatibility is preferred over Minor Version Compatibility for use
+  with this container but was unavailable:
+  [[]]
+  See https://docs.nvidia.com/deploy/cuda-compatibility/ for details.
+
+I1228 15:09:00.237714 1 pinned_memory_manager.cc:277] "Pinned memory pool is created at '0x204c00000' with size 268435456"
+I1228 15:09:00.237811 1 cuda_memory_manager.cc:107] "CUDA memory pool is created on device 0 with size 67108864"
+I1228 15:09:00.243884 1 model_lifecycle.cc:473] "loading: yolov8n_320_trt:1"
+I1228 15:09:00.312885 1 tensorrt.cc:65] "TRITONBACKEND_Initialize: tensorrt"
+I1228 15:09:00.312926 1 tensorrt.cc:75] "Triton TRITONBACKEND API version: 1.19"
+I1228 15:09:00.312931 1 tensorrt.cc:81] "'tensorrt' TRITONBACKEND API version: 1.19"
+I1228 15:09:00.312934 1 tensorrt.cc:105] "backend configuration:\n{\"cmdline\":{\"auto-complete-config\":\"true\",\"backend-directory\":\"/opt/tritonserver/backends\",\"min-compute-capability\":\"6.000000\",\"default-max-batch-size\":\"4\"}}"
+I1228 15:09:00.313096 1 tensorrt.cc:231] "TRITONBACKEND_ModelInitialize: yolov8n_320_trt (version 1)"
+I1228 15:09:00.329505 1 logging.cc:46] "Loaded engine size: 7 MiB"
+W1228 15:09:00.394764 1 model_state.cc:559] "The specified dimensions in model config for yolov8n_320_trt hints that batching is unavailable"
+I1228 15:09:00.397957 1 tensorrt.cc:297] "TRITONBACKEND_ModelInstanceInitialize: yolov8n_320_trt_0_0 (GPU device 0)"
+I1228 15:09:00.408980 1 logging.cc:46] "Loaded engine size: 7 MiB"
+I1228 15:09:00.430229 1 logging.cc:46] "[MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +3, now: CPU 0, GPU 9 (MiB)"
+I1228 15:09:00.430473 1 instance_state.cc:186] "Created instance yolov8n_320_trt_0_0 on GPU 0 with stream priority 0 and optimization profile default[0];"
+I1228 15:09:00.430737 1 model_lifecycle.cc:849] "successfully loaded 'yolov8n_320_trt'"
+I1228 15:09:00.430804 1 server.cc:620] 
++------------------+------+
+| Repository Agent | Path |
++------------------+------+
++------------------+------+
+
+I1228 15:09:00.430832 1 server.cc:647] 
++----------+-----------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Backend  | Path                                                      | Config                                                                                                                                                        |
++----------+-----------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tensorrt | /opt/tritonserver/backends/tensorrt/libtriton_tensorrt.so | {"cmdline":{"auto-complete-config":"true","backend-directory":"/opt/tritonserver/backends","min-compute-capability":"6.000000","default-max-batch-size":"4"}} |
++----------+-----------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+I1228 15:09:00.430852 1 server.cc:690] 
++-----------------+---------+--------+
+| Model           | Version | Status |
++-----------------+---------+--------+
+| yolov8n_320_trt | 1       | READY  |
++-----------------+---------+--------+
+
+I1228 15:09:00.465275 1 metrics.cc:889] "Collecting metrics for GPU 0: NVIDIA GeForce RTX 4080 SUPER"
+I1228 15:09:00.466975 1 metrics.cc:782] "Collecting CPU metrics"
+I1228 15:09:00.467148 1 tritonserver.cc:2598] 
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Option                           | Value                                                                                                                                                                                                           |
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| server_id                        | triton                                                                                                                                                                                                          |
+| server_version                   | 2.64.0                                                                                                                                                                                                          |
+| server_extensions                | classification sequence model_repository model_repository(unload_dependents) schedule_policy model_configuration system_shared_memory cuda_shared_memory binary_tensor_data parameters statistics trace logging |
+| model_repository_path[0]         | /models                                                                                                                                                                                                         |
+| model_control_mode               | MODE_NONE                                                                                                                                                                                                       |
+| strict_model_config              | 0                                                                                                                                                                                                               |
+| model_config_name                |                                                                                                                                                                                                                 |
+| rate_limit                       | OFF                                                                                                                                                                                                             |
+| pinned_memory_pool_byte_size     | 268435456                                                                                                                                                                                                       |
+| cuda_memory_pool_byte_size{0}    | 67108864                                                                                                                                                                                                        |
+| min_supported_compute_capability | 6.0                                                                                                                                                                                                             |
+| strict_readiness                 | 1                                                                                                                                                                                                               |
+| exit_timeout                     | 30                                                                                                                                                                                                              |
+| cache_enabled                    | 0                                                                                                                                                                                                               |
++----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+I1228 15:09:00.470261 1 grpc_server.cc:2562] "Started GRPCInferenceService at 0.0.0.0:8001"
+I1228 15:09:00.470420 1 http_server.cc:4815] "Started HTTPService at 0.0.0.0:8000"
+I1228 15:09:00.512234 1 http_server.cc:358] "Started Metrics Service at 0.0.0.0:8002"

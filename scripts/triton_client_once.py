@@ -2,7 +2,8 @@ import numpy as np
 import tritonclient.http as httpclient
 
 URL = "localhost:8000"
-MODEL = "yolov8n_320_onnx"
+# MODEL = "yolov8n_320_onnx"
+MODEL = "yolov8n_320_trt"
 
 def main():
     client = httpclient.InferenceServerClient(url=URL, verbose=False)
