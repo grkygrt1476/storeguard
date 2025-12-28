@@ -124,3 +124,35 @@ curl -s localhost:8000/v2/models/yolov8n_320_onnx && echo
 pip install -q "tritonclient[http]" numpy
 python scripts/triton_client_once.py 2>&1 | tee outputs/logs/d4_triton_client_once.log
 ```
+## Triton Serving (D3) — TensorRT Engine (P1 Stamp)
+
+We serve the TensorRT FP16 engine using NVIDIA Triton Inference Server and leave reproducible server/client logs.
+
+- Model: `yolov8n_320_trt` (`platform: tensorrt_plan`)
+- Input: `images` = `[1,3,320,320]` FP32
+- Output: `output0` = `[1,84,2100]` FP32
+- Evidence logs:
+  - Server: `outputs/logs/d3_triton_server_trt.log`
+  - Client: `outputs/logs/d3_triton_client_once_trt.log`
+
+### 1) Start Triton server (GPU)
+```bash
+mkdir -p outputs/logs
+
+docker run --rm --gpus all \
+  -p 8000:8000 -p 8001:8001 -p 8002:8002 \
+  -v "$PWD/models":/models \
+  --name triton_storeguard \
+  nvcr.io/nvidia/tritonserver:25.12-py3 \
+  tritonserver --model-repository=/models \
+  2>&1 | tee outputs/logs/d3_triton_server_trt.log
+```
+### 2) Health + model metadata
+```bash
+curl -sS -o /dev/null -w "ready http=%{http_code}\n" http://127.0.0.1:8000/v2/health/ready
+curl -sS http://127.0.0.1:8000/v2/models/yolov8n_320_trt | head
+```
+### 3) 1-shot inference (client)
+```bash
+python scripts/triton_client_once.py 2>&1 | tee outputs/logs/d3_triton_client_once_trt.log
+```
