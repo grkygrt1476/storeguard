@@ -95,3 +95,32 @@ Example:
 ./scripts/trt.sh python -c "import tensorrt as trt; print(trt.__version__)"
 
 ```
+
+## Triton Quickstart (D4 / P0: ONNX Serving)
+
+Serve the exported ONNX model with Triton and run a 1-shot HTTP inference.
+
+### 0) Prereq
+- Docker + NVIDIA Container Toolkit (GPU)
+- `docker login nvcr.io` (NGC)
+
+### 1) Start Triton server (ONNX model repo)
+```bash
+mkdir -p outputs/logs
+
+docker run --rm --gpus all --net=host \
+  -v "$PWD/models":/models \
+  nvcr.io/nvidia/tritonserver:25.12-py3 \
+  tritonserver --model-repository=/models \
+  2>&1 | tee outputs/logs/d4_triton_server_onnx.log
+```
+### 2) Check model is ready
+```bash
+curl -s localhost:8000/v2/health/ready && echo
+curl -s localhost:8000/v2/models/yolov8n_320_onnx && echo
+```
+### 3) 1-shot inference (client)
+```bash
+pip install -q "tritonclient[http]" numpy
+python scripts/triton_client_once.py 2>&1 | tee outputs/logs/d4_triton_client_once.log
+```
