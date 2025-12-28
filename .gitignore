@@ -27,3 +27,4 @@ samples/videos/*.mp4
 
 # raw sample videos (keep local only)
 samples/raw/
+*.plan
