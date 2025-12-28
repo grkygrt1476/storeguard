@@ -7,3 +7,9 @@ if [ -d /usr/lib/wsl/lib ]; then
 fi
 
 exec python "$@"
+
+# chmod +x scripts/run_onnx.sh
+
+# ./scripts/run_onnx.sh scripts/onnx_smoke.py
+# ./scripts/run_onnx.sh -c "import onnxruntime as ort; print(ort.get_available_providers())"
+

@@ -1,0 +1,139 @@
+=== HOST: date ===
+Sun Dec 28 16:27:22 KST 2025
+
+=== HOST: nvidia-smi ===
+Sun Dec 28 16:27:22 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.105.07             Driver Version: 581.80         CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 4080 ...    On  |   00000000:07:00.0  On |                  N/A |
+| 32%   36C    P0             55W /  320W |    2482MiB /  16376MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A              33      G   /Xwayland                             N/A      |
++-----------------------------------------------------------------------------------------+
+
+=== HOST: docker version ===
+Docker version 28.5.1, build e180ab8
+
+=== CONTAINER: TensorRT banner + help head ===
+
+=====================
+== NVIDIA TensorRT ==
+=====================
+
+NVIDIA Release 25.12 (build 240567770)
+NVIDIA TensorRT Version 10.14.1
+Copyright (c) 2016-2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+Container image Copyright (c) 2025, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+https://developer.nvidia.com/tensorrt
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+To install the open-source samples corresponding to this TensorRT release version
+run /opt/tensorrt/install_opensource.sh.  To build the open source parsers,
+plugins, and samples for current top-of-tree on master or a different branch,
+run /opt/tensorrt/install_opensource.sh -b <branch>
+See https://github.com/NVIDIA/TensorRT for more information.
+
+WARNING: CUDA Minor Version Compatibility mode ENABLED.
+  Using driver version 581.80 which has support for CUDA 13.0.  This container
+  was built with CUDA 13.1 and will be run in Minor Version Compatibility mode.
+  CUDA Forward Compatibility is preferred over Minor Version Compatibility for use
+  with this container but was unavailable:
+  [[]]
+  See https://docs.nvidia.com/deploy/cuda-compatibility/ for details.
+
+[inside container]
+/opt/tensorrt/bin/trtexec
+-rwxr-xr-x 1 root root 1828888 Oct 27 22:11 /usr/src/tensorrt/bin/trtexec
+&&&& RUNNING TensorRT.trtexec [TensorRT v101401] [b48] # /usr/src/tensorrt/bin/trtexec -h
+=== Model Options ===
+  --onnx=<file>               ONNX model
+
+=== Build Options ===
+  --minShapes=spec                   Build with dynamic shapes using a profile with the min shapes provided
+  --optShapes=spec                   Build with dynamic shapes using a profile with the opt shapes provided
+  --maxShapes=spec                   Build with dynamic shapes using a profile with the max shapes provided
+  --minShapesCalib=spec              Calibrate with dynamic shapes using a profile with the min shapes provided
+  --optShapesCalib=spec              Calibrate with dynamic shapes using a profile with the opt shapes provided
+  --maxShapesCalib=spec              Calibrate with dynamic shapes using a profile with the max shapes provided
+                                     Note: All three of min, opt and max shapes must be supplied.
+                                           However, if only opt shapes is supplied then it will be expanded so
+                                           that min shapes and max shapes are set to the same values as opt shapes.
+                                           Input names can be wrapped with escaped single quotes (ex: 'Input:0').
+                                     Example input shapes spec: input0:1x3x256x256,input1:1x3x128x128
+                                     For scalars (0-D shapes), use input0:scalar or simply input0: with nothing after the colon.
+                                     Each input shape is supplied as a key-value pair where key is the input name and
+                                     value is the dimensions (including the batch dimension) to be used for that input.
+                                     Each key-value pair has the key and value separated using a colon (:).
+                                     Multiple input shapes can be provided via comma-separated key-value pairs, and each input name can
+                                     contain at most one wildcard ('*') character.
+  --inputIOFormats=spec              Type and format of each of the input tensors (default = all inputs in fp32:chw)
+                                     See --outputIOFormats help for the grammar of type and format list.
+                                     Note: If this option is specified, please set comma-separated types and formats for all
+                                           inputs following the same order as network inputs ID (even if only one input
+                                           needs specifying IO format) or set the type and format once for broadcasting.
+  --outputIOFormats=spec             Type and format of each of the output tensors (default = all outputs in fp32:chw)
+                                     Note: If this option is specified, please set comma-separated types and formats for all
+                                           outputs following the same order as network outputs ID (even if only one output
+                                           needs specifying IO format) or set the type and format once for broadcasting.
+                                     IO Formats: spec  ::= IOfmt[","spec]
+                                                 IOfmt ::= type:fmt
+                                                 type  ::= "fp32"|"fp16"|"bf16"|"int32"|"int64"|"int8"|"uint8"|"bool"
+                                                 fmt   ::= ("chw"|"chw2"|"hwc8"|"chw4"|"chw16"|"chw32"|"dhwc8"|
+                                                            "cdhw32"|"hwc"|"dla_linear"|"dla_hwc4"|"hwc16"|"dhwc")["+"fmt]
+  --memPoolSize=poolspec             Specify the size constraints of the designated memory pool(s)
+                                     Supports the following base-2 suffixes: B (Bytes), G (Gibibytes), K (Kibibytes), M (Mebibytes).
+                                     If none of suffixes is appended, the defualt unit is in MiB.
+                                     Note: Also accepts decimal sizes, e.g. 0.25M. Will be rounded down to the nearest integer bytes.
+
+=== CONTAINER: TensorRT python version ===
+
+=====================
+== NVIDIA TensorRT ==
+=====================
+
+NVIDIA Release 25.12 (build 240567770)
+NVIDIA TensorRT Version 10.14.1
+Copyright (c) 2016-2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+Container image Copyright (c) 2025, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+https://developer.nvidia.com/tensorrt
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+GOVERNING TERMS: The software and materials are governed by the NVIDIA Software License Agreement
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/)
+and the Product-Specific Terms for NVIDIA AI Products
+(found at https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/).
+To install the open-source samples corresponding to this TensorRT release version
+run /opt/tensorrt/install_opensource.sh.  To build the open source parsers,
+plugins, and samples for current top-of-tree on master or a different branch,
+run /opt/tensorrt/install_opensource.sh -b <branch>
+See https://github.com/NVIDIA/TensorRT for more information.
+
+WARNING: CUDA Minor Version Compatibility mode ENABLED.
+  Using driver version 581.80 which has support for CUDA 13.0.  This container
+  was built with CUDA 13.1 and will be run in Minor Version Compatibility mode.
+  CUDA Forward Compatibility is preferred over Minor Version Compatibility for use
+  with this container but was unavailable:
+  [[]]
+  See https://docs.nvidia.com/deploy/cuda-compatibility/ for details.
+
+10.14.1.48
