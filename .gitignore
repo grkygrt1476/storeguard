@@ -9,6 +9,11 @@ __pycache__/
 
 # outputs
 outputs/
+*.onnx
+*.engine
+!outputs/
+!outputs/logs/
+!outputs/logs/**
 
 # local assets (원하면 샘플만 커밋)
 assets/videos/*.mp4

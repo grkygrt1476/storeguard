@@ -1,0 +1,5 @@
+Available providers: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+Using providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+Input name=images shape=[1, 3, 320, 320] -> run_shape=[1, 3, 320, 320] dtype=tensor(float)
+[OK] avg infer: 3.63 ms over 20 runs
+Output output0: shape=(1, 84, 2100) dtype=float32 min=0.0000 max=318.7455

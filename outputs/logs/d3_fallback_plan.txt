@@ -1,0 +1,1 @@
+D3 fallback: use NGC TensorRT container (trtexec not installed on WSL)

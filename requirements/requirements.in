@@ -7,6 +7,7 @@ ultralytics
 
 # --- D3 ONNX ---
 onnx
+onnxslim>=0.1.71
 
 # OS별 런타임 분기 (macOS=CPU, Linux/WSL=GPU)
 onnxruntime; platform_system != "Linux"
