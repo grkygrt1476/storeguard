@@ -38,3 +38,9 @@ samples/videos/*.mp4
 # raw sample videos (keep local only)
 samples/raw/
 *.plan
+
+# datasets (keep labels csv, ignore raw/frames)
+data/raw/**
+data/frames/**
+!data/labels/**
+!data/labels/**/*.csv
