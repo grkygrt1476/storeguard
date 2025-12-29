@@ -1,0 +1,3 @@
+[30] infer=6.96ms y=(1, 84, 2100) drops=72
+[OK] video_out=outputs/videos/d4_demo_trt_overload.mp4
+[OK] metrics=outputs/logs/d4_e2e_metrics_trt_overload.json

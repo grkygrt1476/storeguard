@@ -1,0 +1,7 @@
+[30] infer=6.55ms y=(1, 84, 2100) drops=0
+[60] infer=6.43ms y=(1, 84, 2100) drops=0
+[90] infer=5.44ms y=(1, 84, 2100) drops=0
+[120] infer=5.47ms y=(1, 84, 2100) drops=0
+[150] infer=5.58ms y=(1, 84, 2100) drops=0
+[OK] video_out=outputs/videos/d4_demo_trt.mp4
+[OK] metrics=outputs/logs/d4_e2e_metrics_trt.json

@@ -1,0 +1,2 @@
+[OK] video_out=outputs/videos/d4_demo_trt_roi.mp4
+[OK] metrics=outputs/logs/d4_e2e_metrics_trt_roi.json
