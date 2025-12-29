@@ -7,15 +7,23 @@ __pycache__/
 # venv
 .venv/
 
-# outputs
-outputs/
+# outputs: keep evidence logs/metrics only
+outputs/**
+!outputs/logs/**
+!outputs/logs/**/*.log
+!outputs/logs/**/*.json
+!outputs/logs/**/*.http
+
+# heavy artifacts
+outputs/videos/**
+outputs/engine/**
+outputs/models/**
+
+# model binaries
 *.onnx
 *.engine
-!outputs/
-!outputs/logs/
-!outputs/logs/**
-!outputs/videos/
-outputs/videos/**
+*.plan
+
 
 # local assets (원하면 샘플만 커밋)
 assets/videos/*.mp4
