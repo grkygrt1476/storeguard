@@ -1,0 +1,48 @@
+{
+  "video": "samples/videos/sample.mp4",
+  "model": "yolov8n_320_trt",
+  "triton_url": "localhost:8000",
+  "io_names": {
+    "input": "images",
+    "output": "output0"
+  },
+  "frames_in": 150,
+  "frames_processed": 150,
+  "frames_written": 150,
+  "drops": 0,
+  "fps_effective": 102.89523173205168,
+  "latency_ms": {
+    "total": {
+      "mean": 9.068039894104004,
+      "p95": 11.172698974609375,
+      "max": 12.851481437683105
+    },
+    "preprocess": {
+      "mean": 0.9857049584388733,
+      "p95": 1.8291599750518799,
+      "max": 2.12308406829834
+    },
+    "infer": {
+      "mean": 6.201872825622559,
+      "p95": 7.690075874328613,
+      "max": 9.17880916595459
+    },
+    "postprocess": {
+      "mean": 0.0008969034533947706,
+      "p95": 0.0014650002121925354,
+      "max": 0.001978999935090542
+    },
+    "encode": {
+      "mean": 1.5818368196487427,
+      "p95": 2.0223159790039062,
+      "max": 2.461879014968872
+    }
+  },
+  "warmup_frames_excluded": 5,
+  "realtime_sim": {
+    "enabled": true,
+    "queue_size": 2,
+    "drop_policy": "latest",
+    "target_fps": 0.0
+  }
+}
