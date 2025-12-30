@@ -32,14 +32,15 @@ data/cache_npz/**
 # =========================
 # Outputs (default: ignore all)
 # =========================
-outputs/
-
-# (선택) 로그/지표는 남기고 싶으면 아래 예외 사용
+outputs/*
 !outputs/logs/
+outputs/logs/*
 !outputs/logs/**/*.log
 !outputs/logs/**/*.json
 !outputs/logs/**/*.http
-
+# ignore noisy temp logs (keep local only)
+outputs/logs/d5_cls_onnx_export.log
+outputs/logs/d5_cls_onnx_io.log
 # heavy outputs (redundant safety)
 outputs/videos/
 outputs/engine/
@@ -67,7 +68,6 @@ samples/videos/*.mp4
 # =========================
 # Allowlist: headline modeling run evidence (optional)
 # =========================
-!outputs/modeling/
 
 # v1 headline run
 !outputs/modeling/run_006_seed_sweep_seed43/
@@ -81,3 +81,7 @@ samples/videos/*.mp4
 !outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/*.png
 !outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/metrics.json
 !outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/config.json
+!outputs/logs/
+
+# local-only (do not commit)
+artifacts/onnx/d5_cls_tt_tiny_seed43.sha256
