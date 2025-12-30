@@ -156,3 +156,106 @@ curl -sS http://127.0.0.1:8000/v2/models/yolov8n_320_trt | head
 ```bash
 python scripts/triton_client_once.py 2>&1 | tee outputs/logs/d3_triton_client_once_trt.log
 ```
+
+## Modeling Track (v1) — Clip-sampled Video Classifier (MobileNetV3 + TAP)
+
+This branch adds a lightweight **video-level classifier** to complement the real-time detector pipeline.  
+Goal: **fast, deployable, and time-aware** modeling with reproducible evidence (logs/plots).
+
+---
+
+### Data
+- Source: Kaggle shoplifting videos (≈10s each).
+- Labels: `normal` vs `shoplifting`
+- Raw videos are **NOT** committed (scripts/CSV/metrics only).
+
+---
+
+### Method
+- **Backbone**: MobileNetV3 (ImageNet pretrained) as per-frame feature extractor
+- **Temporal module**: Temporal Attention Pooling (TAP) over `T=16` frames
+- **Head**: 1-layer binary classifier
+- **Video-level scoring**: `top-k mean` aggregation over multiple sampled clips per video (default `k=3`)
+- **Training**: transfer learning (freeze backbone for first N epochs, then unfreeze), AMP enabled  
+  - Note: Freezing reduces **backprop** cost, but **decode/preprocess + forward** still dominate, so epoch time may remain similar (cache helps most).
+
+---
+
+### Pipeline
+1) `videos.csv` → generate train/val splits  
+2) sample clip windows → `data/clips/*_clips.csv`  
+3) (optional but recommended) cache decoded frames into `.npz` to remove decode bottleneck  
+4) train with early stopping + export metrics / best checkpoint  
+5) plot curves from `metrics.json`
+
+---
+
+### Reproduce
+```bash
+# 1) generate clip sampling CSVs
+python scripts/modeling/make_clips.py
+
+# 2) optional cache (faster epochs)
+python scripts/modeling/cache_video_npz.py --cache_fps 8 --size 256
+
+# 3) train (example: seed sweep)
+BASE=outputs/modeling/run_006_seed_sweep
+for S in 42 43 44; do
+  python scripts/modeling/train_v1.py \
+    --use_cache --epochs 30 --early_patience 5 \
+    --batch 8 --amp --num_workers 8 \
+    --dropout 0.3 --wd 3e-4 --video_topk 3 \
+    --seed $S --out_dir ${BASE}_seed${S}
+done
+
+# 4) plot metrics (example: headline run)
+python scripts/modeling/plot_metrics.py \
+  --metrics outputs/modeling/run_006_seed_sweep_seed43/metrics.json \
+  --out outputs/modeling/run_006_seed_sweep_seed43/history.png
+
+```
+## Results (video-level, top-k mean)
+
+### Results (video-level, top-k mean)
+
+| Run | Seed | Best `video_acc_topkmean` |
+|---|---:|---:|
+| `run_006_seed_sweep_seed42` | 42 | 0.9167 |
+| `run_006_seed_sweep_seed43` | 43 | 0.9444 |
+| `run_006_seed_sweep_seed44` | 44 | 0.9444 |
+
+**Recommendation:** Use **one best run** as the headline (plot + `metrics.json`), and keep the seed sweep as stability evidence.
+
+---
+
+### Evidence
+- Loader/decoder checks: `outputs/logs/loader_smoke_*.txt`
+- Clip decode sample: `outputs/videos/smoke_clip_*.mp4`
+- Training metrics: `outputs/modeling/run_*/metrics.json`
+- Curves: `outputs/modeling/run_*/plots/history_*.png`
+
+---
+
+### Notes / Limitations
+- Dataset is small and may not match Korean store CCTV domain.
+
+
+### Headline run plots
+Run: `run_006_seed_sweep_seed43`
+
+<p align="center">
+  <img src="outputs/modeling/run_006_seed_sweep_seed43/plots/history_metrics.png" width="720" />
+</p>
+
+<p align="center">
+  <img src="outputs/modeling/run_006_seed_sweep_seed43/plots/history_loss.png" width="720" />
+</p>
+
+<p align="center">
+  <img src="outputs/modeling/run_006_seed_sweep_seed43/plots/history_time.png" width="720" />
+</p>
+
+### Next
+- Replace dataset (AIHub/partner data)
+- Add temporal head (tiny transformer)
+- Integrate into serving pipeline
