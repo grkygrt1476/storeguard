@@ -1,4 +1,7 @@
 # scripts/modeling/plot_metrics.py
+'''
+(.venv) kihun@user:~/storeguard$ python scripts/modeling/plot_metrics.py --run_dir outputs/modeling/run_010_tt_tiny_seed_sweep_seed43Docstring for scripts.modeling.plot_metrics
+'''
 import argparse, json, os
 import matplotlib.pyplot as plt
 

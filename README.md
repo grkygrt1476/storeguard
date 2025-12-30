@@ -259,3 +259,53 @@ Run: `run_006_seed_sweep_seed43`
 - Replace dataset (AIHub/partner data)
 - Add temporal head (tiny transformer)
 - Integrate into serving pipeline
+
+## Ablation v1 — Tiny Temporal Transformer Head (TT)
+
+TAP(Temporal Attention Pooling) 대신 **Tiny Temporal Transformer**로 시간축 모델링을 교체한 실험입니다.  
+Backbone(MobileNetV3) + 학습/데이터 파이프라인은 동일하고, **temporal head만 변경**했습니다.
+
+### What changed
+- `--temporal tap` → `--temporal tt`
+- TT config (tiny):
+  - `tt_d_model=64`, `tt_heads=2`, `tt_layers=1`, `tt_dropout=0.2`
+- Cache `.npz` 로딩 시 key 호환: `cache_fps/native_fps` 사용 + (없으면 mp4 decode fallback)
+
+### Reproduce (tiny TT seed sweep)
+```bash
+BASE=outputs/modeling/run_010_tt_tiny_seed_sweep
+for S in 42 43 44; do
+  python scripts/modeling/train_v2_tt.py \
+    --temporal tt --use_cache --amp \
+    --epochs 30 --early_patience 5 \
+    --batch 8 --num_workers 8 \
+    --dropout 0.4 --wd 5e-4 --video_topk 3 \
+    --tt_d_model 64 --tt_heads 2 --tt_layers 1 --tt_dropout 0.2 \
+    --seed $S \
+    --out_dir ${BASE}_seed${S}
+done
+
+```
+### Results (video-level, top-k mean)
+
+| Run | Seed | Best `video_acc_topkmean` |
+|---|---:|---:|
+| `run_010_tt_tiny_seed_sweep_seed42` | 42 | 0.9167 |
+| `run_010_tt_tiny_seed_sweep_seed43` | 43 | 0.9444 |
+| `run_010_tt_tiny_seed_sweep_seed44` | 44 | 0.9167 |
+
+**Recommendation:** Use `seed43` as the headline run, keep the sweep as stability evidence.
+
+### Evidence
+- Metrics: `outputs/modeling/run_010_tt_tiny_seed_sweep_seed*/metrics.json`
+- Curves: `outputs/modeling/run_010_tt_tiny_seed_sweep_seed*/plots/history_*.png`
+
+### Notes
+- Dataset is small; performance is likely capped by data quantity/variety rather than the temporal head choice.
+
+#### Curves (headline run: seed43)
+
+![TT Val Metrics](outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/history_metrics.png)
+
+<!-- optional -->
+![Train Loss](outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/history_loss.png)

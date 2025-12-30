@@ -1,46 +1,83 @@
-# Python
+# =========================
+# Python / venv
+# =========================
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# venv
+*.py[cod]
 .venv/
 
-# outputs: keep evidence logs/metrics only
-outputs/**
-!outputs/logs/**
-!outputs/logs/**/*.log
-!outputs/logs/**/*.json
-!outputs/logs/**/*.http
-
-# heavy artifacts
-outputs/videos/**
-outputs/engine/**
-outputs/models/**
-
-# model binaries
-*.onnx
-*.engine
-*.plan
-
-
-# local assets (원하면 샘플만 커밋)
-assets/videos/*.mp4
-samples/videos/*.mp4
-!samples/videos/sample.mp4
-
-# OS/IDE
+# =========================
+# OS / IDE
+# =========================
 .DS_Store
 .vscode/
 .idea/
 
-# raw sample videos (keep local only)
-samples/raw/
-*.plan
+# =========================
+# Datasets
+# - keep labels csv only
+# =========================
+data/raw/
+data/frames/
+data/cache_npz/
+data/cache_npz/**
 
-# datasets (keep labels csv, ignore raw/frames)
-data/raw/**
-data/frames/**
-!data/labels/**
+# labels만 추적
+!data/labels/
 !data/labels/**/*.csv
+
+# (선택) clip sampling csv를 커밋할지 말지
+# 커밋하려면 아래 ignore 줄을 주석 처리해.
+# data/clips/
+
+# =========================
+# Outputs (default: ignore all)
+# =========================
+outputs/
+
+# (선택) 로그/지표는 남기고 싶으면 아래 예외 사용
+!outputs/logs/
+!outputs/logs/**/*.log
+!outputs/logs/**/*.json
+!outputs/logs/**/*.http
+
+# heavy outputs (redundant safety)
+outputs/videos/
+outputs/engine/
+outputs/models/
+
+# =========================
+# Model binaries / artifacts
+# =========================
+*.onnx
+*.engine
+*.plan
+*.pth
+*.pt
+*.ckpt
+*.trt
+
+# =========================
+# Local assets / samples
+# =========================
+assets/videos/*.mp4
+samples/raw/
+samples/videos/*.mp4
+!samples/videos/sample.mp4
+
+# =========================
+# Allowlist: headline modeling run evidence (optional)
+# =========================
+!outputs/modeling/
+
+# v1 headline run
+!outputs/modeling/run_006_seed_sweep_seed43/
+!outputs/modeling/run_006_seed_sweep_seed43/plots/
+!outputs/modeling/run_006_seed_sweep_seed43/plots/*.png
+!outputs/modeling/run_006_seed_sweep_seed43/metrics.json
+
+# TT headline run
+!outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/
+!outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/
+!outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/*.png
+!outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/metrics.json
+!outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/config.json
