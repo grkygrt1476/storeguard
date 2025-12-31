@@ -1,0 +1,4 @@
+opset_import: [('', 18)]
+ORT providers: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+input : input [1, 16, 3, 224, 224] tensor(float)
+output: logit [1] tensor(float)
