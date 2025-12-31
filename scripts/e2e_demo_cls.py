@@ -1,16 +1,15 @@
-# scripts/e2e_demo.py
 #!/usr/bin/env python3
 import argparse
 import json
 import time
-from collections import deque
 from pathlib import Path
 from typing import Tuple, Optional
+from collections import deque
 
 import cv2
 import numpy as np
-import onnxruntime as ort
 import tritonclient.http as httpclient
+import onnxruntime as ort
 
 
 def now_ms() -> float:
@@ -55,7 +54,7 @@ def preprocess_bgr_to_nchw_fp32(frame_bgr: np.ndarray, in_w: int, in_h: int) -> 
 
 
 IMAGENET_MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
-IMAGENET_STD = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+IMAGENET_STD  = np.array([0.229, 0.224, 0.225], dtype=np.float32)
 
 
 def sigmoid(z: float) -> float:
@@ -65,7 +64,18 @@ def sigmoid(z: float) -> float:
 def build_ort_session(onnx_path: str):
     avail = ort.get_available_providers()
     providers = ["CUDAExecutionProvider", "CPUExecutionProvider"] if "CUDAExecutionProvider" in avail else ["CPUExecutionProvider"]
-    sess = ort.InferenceSession(onnx_path, providers=providers)
+    try:
+        sess = ort.InferenceSession(onnx_path, providers=providers)
+    except Exception as e:
+        # fallback hard to CPU if CUDA EP init fails
+        print("*************** EP Error ***************")
+        print(e)
+        print(f" when using {providers}")
+        print("Falling back to ['CPUExecutionProvider'] and retrying.")
+        print("****************************************")
+        sess = ort.InferenceSession(onnx_path, providers=["CPUExecutionProvider"])
+        providers = ["CPUExecutionProvider"]
+
     in_name = sess.get_inputs()[0].name
     out_name = sess.get_outputs()[0].name
     return sess, in_name, out_name, providers
@@ -88,11 +98,9 @@ def preprocess_clip_bgr_to_btchw_fp32(frames_bgr, out_w=224, out_h=224, norm="im
 
 def safe_crop(frame: np.ndarray, x1: int, y1: int, x2: int, y2: int) -> np.ndarray:
     h, w = frame.shape[:2]
-    x1 = max(0, min(w - 1, x1))
-    x2 = max(0, min(w, x2))
-    y1 = max(0, min(h - 1, y1))
-    y2 = max(0, min(h, y2))
-    if x2 <= x1 + 1 or y2 <= y1 + 1:
+    x1 = max(0, min(w-1, x1)); x2 = max(0, min(w, x2))
+    y1 = max(0, min(h-1, y1)); y2 = max(0, min(h, y2))
+    if x2 <= x1+1 or y2 <= y1+1:
         return frame
     return frame[y1:y2, x1:x2].copy()
 
@@ -232,7 +240,7 @@ def main():
     ap.add_argument("--cls-on", choices=["intrusion", "loitering"], default="loitering", help="when to run classifier")
     ap.add_argument("--cls-crop", choices=["roi", "person"], default="roi", help="crop source for clip frames")
     ap.add_argument("--cls-norm", choices=["imagenet", "none"], default="imagenet", help="normalization for classifier input")
-    ap.add_argument("--cls-thres", type=float, default=0.5, help="score threshold for overlay flag")
+    ap.add_argument("--cls-thres", type=float, default=0.5, help="(reserved) threshold for decision/overlay")
 
     args = ap.parse_args()
 
@@ -251,33 +259,47 @@ def main():
     frame_interval_ms = 1000.0 / out_fps
 
     roi = parse_roi(args.roi, args.roi_rel, w, h)
-
     writer = open_writer(args.out, w, h, min(out_fps, 60.0))
 
     # stats
     lat_pre, lat_inf, lat_post, lat_enc, lat_total = [], [], [], [], []
-    frames_in, frames_proc, frames_written, drops = 0, 0, 0, 0
     lat_cls = []
-    cls_score = None
+    cls_calls = 0
+
+    frames_in, frames_proc, frames_written, drops = 0, 0, 0, 0
 
     # event stats
     intrusion_frames, loitering_frames = 0, 0
     roi_presence_ms = 0.0
 
-    cls_sess = None
-    cls_in = None
-    cls_out = None
-    cls_providers = None
-    clip_buf = deque(maxlen=args.cls_t)
-
-    if args.cls_onnx:
-        cls_sess, cls_in, cls_out, cls_providers = build_ort_session(args.cls_onnx)
-        print(f"[CLS] enabled onnx={args.cls_onnx} providers={cls_providers} in={cls_in} out={cls_out} T={args.cls_t}")
-
     # fps overlay (moving)
     tick0 = time.perf_counter()
     proc_in_window = 0
     fps_overlay = 0.0
+
+    # -------------------------
+    # Optional classifier session + clip buffer
+    # -------------------------
+    cls_sess = None
+    cls_in = None
+    cls_out = None
+    cls_providers = []
+    clip_buf = None
+    if args.cls_onnx:
+        cls_sess, cls_in, cls_out, cls_providers = build_ort_session(args.cls_onnx)
+
+        # if model has fixed T, override args.cls_t to avoid "Expected: 16" mismatch
+        try:
+            in_shape = cls_sess.get_inputs()[0].shape  # e.g., [1, 16, 3, 224, 224]
+            fixed_t = in_shape[1] if (len(in_shape) > 1 and isinstance(in_shape[1], int)) else None
+            if fixed_t is not None and args.cls_t != fixed_t:
+                print(f"[CLS] overriding --cls-t {args.cls_t} -> {fixed_t} (model expects fixed T)")
+                args.cls_t = fixed_t
+        except Exception:
+            pass
+
+        clip_buf = deque(maxlen=args.cls_t)
+        print(f"[CLS] enabled onnx={args.cls_onnx} providers={cls_providers} in={cls_in} out={cls_out} T={args.cls_t}")
 
     t_start = time.perf_counter()
 
@@ -292,7 +314,6 @@ def main():
             lag = frames_in - expected_frames
             budget = args.queue_size
             if lag > budget:
-                # drop extra frames to catch up
                 drop_n = lag - budget
                 for _ in range(drop_n):
                     ok, _ = cap.read()
@@ -321,30 +342,34 @@ def main():
         # postprocess: decode person boxes in input-space
         t_post0 = now_ms()
         boxes_in, scores = yolov8_decode_person(y, args.conf, args.nms_iou, args.in_w, args.in_h)
+
         # scale to original frame space
         sx = w / float(args.in_w)
         sy = h / float(args.in_h)
 
         event = "normal"
         hit_any = False
+
+        # choose best hit box (for cls-crop person)
         best_hit = None
-        best_area = -1.0
+        best_area = 0
 
         # draw ROI
         rx1, ry1, rx2, ry2 = roi
         cv2.rectangle(frame, (rx1, ry1), (rx2, ry2), (255, 200, 0), 2)
 
         for bb in boxes_in:
-            x1, y1, x2, y2 = bb
-            X1, Y1, X2, Y2 = int(x1 * sx), int(y1 * sy), int(x2 * sx), int(y2 * sy)
+            x1, y1_, x2, y2 = bb
+            X1, Y1, X2, Y2 = int(x1 * sx), int(y1_ * sy), int(x2 * sx), int(y2 * sy)
             X1, Y1 = max(0, X1), max(0, Y1)
             X2, Y2 = min(w - 1, X2), min(h - 1, Y2)
 
-            hr = roi_hit_ratio((float(X1), float(Y1), float(X2), float(Y2)), (float(rx1), float(ry1), float(rx2), float(ry2)))
+            hr = roi_hit_ratio((float(X1), float(Y1), float(X2), float(Y2)),
+                               (float(rx1), float(ry1), float(rx2), float(ry2)))
             is_hit = hr >= args.roi_hit
             if is_hit:
                 hit_any = True
-                area = float((X2 - X1) * (Y2 - Y1))
+                area = max(0, (X2 - X1)) * max(0, (Y2 - Y1))
                 if area > best_area:
                     best_area = area
                     best_hit = (X1, Y1, X2, Y2)
@@ -365,29 +390,34 @@ def main():
 
         t_post1 = now_ms()
 
-        # --- classifier wiring (optional) ---
-        if cls_sess:
-            rx1, ry1, rx2, ry2 = roi
-            if args.cls_crop == "person" and best_hit is not None:
-                X1, Y1, X2, Y2 = best_hit
-                crop = safe_crop(frame, X1, Y1, X2, Y2)
-            else:
+        # -------------------------
+        # Classifier (D5) call + latency logging
+        # - runs only when event is active per --cls-on
+        # -------------------------
+        if cls_sess is not None and clip_buf is not None:
+            # crop for buffer
+            if args.cls_crop == "roi":
                 crop = safe_crop(frame, rx1, ry1, rx2, ry2)
-
+            else:
+                crop = safe_crop(frame, *best_hit) if best_hit else safe_crop(frame, rx1, ry1, rx2, ry2)
             clip_buf.append(crop)
 
+            active = False
             if args.cls_on == "intrusion":
                 active = (event in ["intrusion", "loitering"])
-            else:
+            else:  # loitering
                 active = (event == "loitering")
 
             if active and len(clip_buf) == args.cls_t and (frames_proc % args.cls_every == 0):
-                x_clip = preprocess_clip_bgr_to_btchw_fp32(list(clip_buf), out_w=224, out_h=224, norm=args.cls_norm)
                 t_cls0 = now_ms()
-                logit = cls_sess.run(None, {cls_in: x_clip})[0].reshape(-1)[0]
+                x_clip = preprocess_clip_bgr_to_btchw_fp32(
+                    list(clip_buf), out_w=224, out_h=224, norm=args.cls_norm
+                )
+                _ = cls_sess.run(None, {cls_in: x_clip})[0]
                 t_cls1 = now_ms()
-                lat_cls.append(t_cls1 - t_cls0)
-                cls_score = sigmoid(float(logit))
+                cls_calls += 1
+                if frames_proc > args.warmup:
+                    lat_cls.append(t_cls1 - t_cls0)
 
         # overlay HUD
         infer_ms = (t_inf1 - t_inf0)
@@ -397,13 +427,9 @@ def main():
             tick0 = time.perf_counter()
             proc_in_window = 0
 
-        cls_txt = f" | cls={cls_score:.2f}" if cls_score is not None else ""
-        hud1 = f"EVENT: {event}{cls_txt} | FPS~{fps_overlay:.1f} | infer={infer_ms:.2f}ms | drops={drops}"
+        hud1 = f"EVENT: {event} | FPS~{fps_overlay:.1f} | infer={infer_ms:.2f}ms | drops={drops} | cls_calls={cls_calls}"
         cv2.putText(frame, hud1, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (30, 30, 30), 3, cv2.LINE_AA)
         cv2.putText(frame, hud1, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (245, 245, 245), 1, cv2.LINE_AA)
-
-        if cls_score is not None and cls_score >= args.cls_thres:
-            cv2.putText(frame, "CLS ALERT", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
 
         # encode
         t_enc0 = now_ms()
@@ -423,7 +449,7 @@ def main():
             lat_total.append(t1 - t0)
 
         if frames_proc % 30 == 0:
-            print(f"[{frames_proc}] infer={infer_ms:.2f}ms y={tuple(y.shape)} drops={drops} event={event}")
+            print(f"[{frames_proc}] infer={infer_ms:.2f}ms y={tuple(y.shape)} drops={drops} event={event} cls_calls={cls_calls}")
 
     cap.release()
     writer.release()
@@ -454,6 +480,7 @@ def main():
             "cls": stat_ms(lat_cls),
             "total": stat_ms(lat_total),
         },
+        "cls_calls": int(cls_calls),
         "events": {
             "intrusion_frames": int(intrusion_frames),
             "loitering_frames": int(loitering_frames),

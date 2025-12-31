@@ -1,8 +1,57 @@
 # storeguard
-Real-time unmanned store CCTV anomaly detection (ONNX + TensorRT).무인매장 CCTV 영상을 실시간 스트림처럼 처리하고 이상행동 감지 프로젝트
+Real-time unmanned store CCTV anomaly detection (ONNX + TensorRT).무인매장 CCTV 영상을 처리하고 이상행동 감지 프로젝트
 
-무인가게(또는 CCTV 환경)에서 발생할 수 있는 이상행동을 **실시간 영상 파이프라인**으로 탐지/표시하는 미니 데모입니다.  
+무인가게(또는 CCTV 환경)에서 발생할 수 있는 이상행동을 **영상 파이프라인**으로 탐지/표시하는 미니 데모입니다.  
 5일 안에 “돌아가는 증거”를 남기는 것이 목표이며, 이후 상용 최적화 루트(ONNX Runtime/TensorRT)까지 확장 가능한 구조로 설계합니다.
+
+## architecture
+```mermaid
+---
+config:
+  theme: default
+---
+flowchart TB
+classDef io stroke-width:1px;
+classDef proc stroke-width:1px;
+classDef srv stroke-width:1px,stroke-dasharray: 3 3;
+classDef note stroke-width:1px,stroke-dasharray: 2 2;
+
+subgraph D4["D4 — E2E Triton pipeline (evidence-backed)"]
+direction TB
+
+  V["Video Loop<br/>(read frames)"]:::io
+  Dp["Real-time Frame Skipping (lag-based)<br/>buffer=2 / keep=latest"]:::proc
+  P["Preprocess<br/>resize + normalize<br/>→ 1×3×320×320 (NCHW)"]:::proc
+
+  TC["Triton Client<br/>(HTTP)"]:::proc
+  TS["Triton Server<br/>(ONNXRuntime GPU)<br/>YOLOv8n_320"]:::srv
+
+  Y["Model Output<br/>1×84×2100"]:::io
+  N["Postprocess<br/>decode + NMS"]:::proc
+  R["Detections<br/>(boxes / scores / classes)"]:::io
+
+  Evt["Alert Decision<br/>ROI hit ratio + loiter_sec"]:::proc
+
+  O["Overlay + Encode<br/>(write video / stream)"]:::proc
+  M["Metrics / Logs<br/>drops, fps, p95(total/e2e)"]:::note
+
+  V --> Dp --> P --> TC --> TS --> Y --> N --> R --> Evt --> O --> M
+end
+
+subgraph D5["D5 — Event-gated Classifier (ONNX)"]
+direction TB
+  Samp["Clip sampler<br/>(ROI/person crop → T frames)"]:::proc
+  CIn["Clip input<br/>(1×T×3×224×224)"]:::io
+  CL["ONNXRuntime<br/>(CUDA EP)"]:::proc
+  COut["Logit<br/>→ score / flag"]:::io
+  Cm["CLS Metrics<br/>cls_calls, latency.cls"]:::note
+
+  Samp --> CIn --> CL --> COut --> Cm
+end
+
+Evt -. "event active (intrusion/loitering)" .-> Samp
+```
+
 
 ## Goals
 - 영상 입력(loop) → 추론 → 오버레이 출력까지 **엔드투엔드 파이프라인 증명**
@@ -13,8 +62,8 @@ Real-time unmanned store CCTV anomaly detection (ONNX + TensorRT).무인매장 C
 - D1: Video loop + FPS overlay + screenshot
 - D2: ROI intrusion event (YOLO person + head-point rule)
 - D3: TensorRT FP16 engine build + evidence log + benchmark
-- D4: ORT(CUDA) vs TRT(FP16) 비교 + E2E FPS/p95 측정
-- D5: (Optional) Triton serving + 포트폴리오 패키징
+- D4: Triton(ONNXRuntime GPU) serving + E2E FPS/p95 측정
+- D5: Clip classifier wiring (ONNXRuntime CUDA) + metrics(cls_calls/latency.cls) + packaging
 
 ## Demo (D1-2 Video Loop MVP)
 ```bash
@@ -309,3 +358,22 @@ done
 
 <!-- optional -->
 ![Train Loss](outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/plots/history_loss.png)
+
+## D4 — E2E Triton pipeline (evidence-backed)
+
+- Triton Inference Server로 **YOLOv8n ONNX** 모델을 서빙하고,
+- 영상 프레임을 루프 처리하며 **preprocess → Triton HTTP inference → postprocess(decode+NMS) → ROI 이벤트 판정 → overlay+encode**까지
+  end-to-end 데모를 구성했습니다.
+- 결과물로 **output mp4 + metrics json**을 남기며, metrics에는 `drops`, `fps_effective`,
+  `latency_ms(preprocess/infer/postprocess/encode/total)` 및 `events(intrusion_frames, loitering_frames)`가 기록됩니다.
+
+## D5 — Classifier wiring (planned → implemented)
+
+- D4의 이벤트 결과 뒤에 **clip-sampled video classifier(ONNXRuntime, GPU)** 를 “후단 refine”으로 연결했습니다.
+- 이벤트가 활성화되면 ROI(or person) crop에서 **T=16 프레임 clip**을 구성해 classifier를 실행하고 score(logit)를 얻습니다.
+- “실제로 돌았는지”를 증명하기 위해 metrics에 아래를 추가했습니다.
+  - `cls_calls`: classifier 호출 횟수
+  - `latency_ms.cls`: classifier latency 통계(mean/p95/max)
+
+### Evidence
+- Metrics JSON: `outputs/logs/*.json`
