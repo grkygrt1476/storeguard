@@ -83,5 +83,8 @@ samples/videos/*.mp4
 !outputs/modeling/run_010_tt_tiny_seed_sweep_seed43/config.json
 !outputs/logs/
 
-# local-only (do not commit)
-artifacts/onnx/d5_cls_tt_tiny_seed43.sha256
+# ONNX artifact for d5_cls_tt_tiny_seed43
+!artifacts/onnx/d5_cls_tt_tiny_seed43.sha256
+
+# keep evidence index
+!outputs/logs/INDEX.md

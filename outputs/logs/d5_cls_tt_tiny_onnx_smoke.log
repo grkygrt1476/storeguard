@@ -1,0 +1,4 @@
+providers_avail: ['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']
+providers_used : ['CUDAExecutionProvider', 'CPUExecutionProvider']
+out_shape: (1,) sample: 3.3535311222076416
+lat_ms: mean=2.918 p50=2.905 p95=3.066
