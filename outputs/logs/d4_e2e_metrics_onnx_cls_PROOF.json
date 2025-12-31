@@ -1,0 +1,77 @@
+{
+  "video": "assets/videos/sample.mp4",
+  "model": "yolov8n_320_onnx",
+  "url": "localhost:8000",
+  "input": {
+    "name": "images",
+    "shape": [
+      1,
+      3,
+      320,
+      320
+    ],
+    "dtype": "FP32"
+  },
+  "output": {
+    "name": "output0"
+  },
+  "realtime": {
+    "target_fps": 25.0,
+    "queue_size": 64,
+    "drop_policy": "latest",
+    "warmup": 0
+  },
+  "roi": {
+    "xyxy": [
+      76,
+      144,
+      323,
+      648
+    ],
+    "roi_hit": 0.1,
+    "loiter_sec": 3.0
+  },
+  "drops": 53,
+  "fps_effective": 82.16994659270769,
+  "latency_ms": {
+    "preprocess": {
+      "mean": 0.6189861297607422,
+      "p95": 1.3367849588394165,
+      "max": 8.997708320617676
+    },
+    "infer": {
+      "mean": 8.898625373840332,
+      "p95": 10.161316871643066,
+      "max": 24.599021911621094
+    },
+    "postprocess": {
+      "mean": 0.2633877098560333,
+      "p95": 0.3131393492221832,
+      "max": 3.0248639583587646
+    },
+    "encode": {
+      "mean": 1.5309380292892456,
+      "p95": 1.9410501718521118,
+      "max": 3.597973108291626
+    },
+    "cls": {
+      "mean": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "total": {
+      "mean": 11.657526969909668,
+      "p95": 13.085103988647461,
+      "max": 40.925621032714844
+    }
+  },
+  "events": {
+    "intrusion_frames": 4,
+    "loitering_frames": 0
+  },
+  "frames": {
+    "in": 150,
+    "processed": 97,
+    "written": 97
+  }
+}
