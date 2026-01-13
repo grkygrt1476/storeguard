@@ -1,8 +1,24 @@
+## TL;DR
+StoreGuard is a video AI demo that detects intrusion/loitering events from CCTV footage and triggers a lightweight classifier only on event segments to control cost.
+
+### Quickstart
+```bash
+python scripts/demo_video.py --video assets/videos/sample.mp4 --out outputs/demo.mp4
+```
+
+## Evidence
+- **Demo video**: `outputs/demo.mp4`
+- **Metrics log**: `outputs/logs/d4_e2e_metrics_trt_cls.json`
+
+## Limitations / Next
+- **Limitations**: not a live RTSP stream, tracking is minimal
+- **Next**: add ByteTrack for stable dwell-time, add RTSP ingest
+
 # storeguard
 Real-time unmanned store CCTV anomaly detection (ONNX + TensorRT).무인매장 CCTV 영상을 처리하고 이상행동 감지 프로젝트
 
-무인가게(또는 CCTV 환경)에서 발생할 수 있는 이상행동을 **영상 파이프라인**으로 탐지/표시하는 미니 데모입니다.  
-5일 안에 “돌아가는 증거”를 남기는 것이 목표이며, 이후 상용 최적화 루트(ONNX Runtime/TensorRT)까지 확장 가능한 구조로 설계합니다.
+무인매장 CCTV 영상을 처리하고 이상행동을 영상 파이프라인으로 탐지/표시하는 미니 데모입니다.
+5일 안에 “돌아가는 증거”를 남기는 것이 목표이며, 이후 ONNX Runtime/TensorRT 기반 최적화까지 확장 가능한 구조로 설계했습니다.
 
 ## architecture
 ```mermaid
