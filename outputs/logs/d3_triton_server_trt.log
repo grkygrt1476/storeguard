@@ -75,3 +75,4 @@ I0113 19:05:00.561980 1 tritonserver.cc:2598]
 I0113 19:05:00.584168 1 grpc_server.cc:2562] "Started GRPCInferenceService at 0.0.0.0:8001"
 I0113 19:05:00.584302 1 http_server.cc:4815] "Started HTTPService at 0.0.0.0:8000"
 I0113 19:05:00.626716 1 http_server.cc:358] "Started Metrics Service at 0.0.0.0:8002"
+time="2026-01-14T04:43:52+09:00" level=error msg="error waiting for container: unexpected EOF"
