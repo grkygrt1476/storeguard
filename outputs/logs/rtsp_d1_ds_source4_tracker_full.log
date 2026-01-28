@@ -1,0 +1,99 @@
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.806: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfluidsynthmidi.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.828: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenmpt.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.834: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlame.so': libmp3lame.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.838: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtsdec.so': libdca.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.856: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpulseaudio.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.909: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstresindvd.so': libdvdnav.so.4: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.915: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpg123.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.920: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdread.so': libdvdread.so.8: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.943: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmplex.so': libmjpegutils-2.1.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.951: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsndfile.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.977: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_ucx.so': libucs.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:06.979: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_inferserver.so': libtritonserver.so: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:35): GStreamer-WARNING **: 19:08:07.043: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_udp.so': librivermax.so.1: cannot open shared object file: No such file or directory
+0:00:00.554572273 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<secondary_gie_1>[00m NvDsInferContext[UID 5]: Warning from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2097> [UID = 5]: deserialize engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleMake/resnet18_vehiclemakenet_pruned.onnx_b16_gpu0_fp16.engine failed
+0:00:00.554610468 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<secondary_gie_1>[00m NvDsInferContext[UID 5]: Warning from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2202> [UID = 5]: deserialize backend context from engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleMake/resnet18_vehiclemakenet_pruned.onnx_b16_gpu0_fp16.engine failed, try rebuild
+0:00:00.554616942 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<secondary_gie_1>[00m NvDsInferContext[UID 5]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2123> [UID = 5]: Trying to create engine from model files
+0:00:34.989459463 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<secondary_gie_1>[00m NvDsInferContext[UID 5]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2155> [UID = 5]: serialize cuda engine to file: /opt/nvidia/deepstream/deepstream-8.0/samples/models/Secondary_VehicleMake/resnet18_vehiclemakenet_pruned.onnx_b16_gpu0_fp16.engine successfully
+0:00:35.338587982 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<secondary_gie_1>[00m [UID 5]: Load new model:/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/config_infer_secondary_vehiclemake.txt sucessfully
+0:00:35.338804403 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<secondary_gie_0>[00m NvDsInferContext[UID 4]: Warning from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2097> [UID = 4]: deserialize engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleTypes/resnet18_vehicletypenet_pruned.onnx_b16_gpu0_fp16.engine failed
+0:00:35.338836485 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<secondary_gie_0>[00m NvDsInferContext[UID 4]: Warning from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2202> [UID = 4]: deserialize backend context from engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleTypes/resnet18_vehicletypenet_pruned.onnx_b16_gpu0_fp16.engine failed, try rebuild
+0:00:35.338846521 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<secondary_gie_0>[00m NvDsInferContext[UID 4]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2123> [UID = 4]: Trying to create engine from model files
+0:00:58.756049895 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<secondary_gie_0>[00m NvDsInferContext[UID 4]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2155> [UID = 4]: serialize cuda engine to file: /opt/nvidia/deepstream/deepstream-8.0/samples/models/Secondary_VehicleTypes/resnet18_vehicletypenet_pruned.onnx_b16_gpu0_fp16.engine successfully
+0:00:59.095525824 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<secondary_gie_0>[00m [UID 4]: Load new model:/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/config_infer_secondary_vehicletypes.txt sucessfully
+WARNING: ../nvdsinfer/nvdsinfer_model_builder.cpp:1261 Deserialize engine failed because file path: /opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleMake/resnet18_vehiclemakenet_pruned.onnx_b16_gpu0_fp16.engine open error
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [FullDims Engine Info]: layers num: 2
+0   INPUT  kFLOAT input_1:0       3x224x224       min: 1x3x224x224     opt: 16x3x224x224    Max: 16x3x224x224    
+1   OUTPUT kFLOAT predictions/Softmax:0 20              min: 0               opt: 0               Max: 0               
+
+WARNING: ../nvdsinfer/nvdsinfer_model_builder.cpp:1261 Deserialize engine failed because file path: /opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Secondary_VehicleTypes/resnet18_vehicletypenet_pruned.onnx_b16_gpu0_fp16.engine open error
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [FullDims Engine Info]: layers num: 2
+0   INPUT  kFLOAT input_1:0       3x224x224       min: 1x3x224x224     opt: 16x3x224x224    Max: 16x3x224x224    
+1   OUTPUT kFLOAT predictions/Softmax:0 6               min: 0               opt: 0               Max: 0               
+
+gstnvtracker: Loading low-level lib at /opt/nvidia/deepstream/deepstream/lib/libnvds_nvmultiobjecttracker.so
+[NvMultiObjectTracker] Initialized
+0:00:59.220911442 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2097> [UID = 1]: deserialize engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b4_gpu0_fp16.engine failed
+0:00:59.220946598 [32m   31[00m 0x5c36d39fbfc0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2202> [UID = 1]: deserialize backend context from engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b4_gpu0_fp16.engine failed, try rebuild
+0:00:59.220954740 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2123> [UID = 1]: Trying to create engine from model files
+0:01:25.595210777 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2155> [UID = 1]: serialize cuda engine to file: /opt/nvidia/deepstream/deepstream-8.0/samples/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b4_gpu0_fp16.engine successfully
+0:01:25.988773961 [32m   31[00m 0x5c36d39fbfc0 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<primary_gie>[00m [UID 1]: Load new model:/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/config_infer_primary.txt sucessfully
+WARNING: ../nvdsinfer/nvdsinfer_model_builder.cpp:1261 Deserialize engine failed because file path: /opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b4_gpu0_fp16.engine open error
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [FullDims Engine Info]: layers num: 3
+0   INPUT  kFLOAT input_1:0       3x544x960       min: 1x3x544x960     opt: 4x3x544x960     Max: 4x3x544x960     
+1   OUTPUT kFLOAT output_cov/Sigmoid:0 4x34x60         min: 0               opt: 0               Max: 0               
+2   OUTPUT kFLOAT output_bbox/BiasAdd:0 16x34x60        min: 0               opt: 0               Max: 0               
+
+
+Runtime commands:
+	h: Print this help
+	q: Quit
+
+	p: Pause
+	r: Resume
+
+NOTE: To expand a source in the 2D tiled display and view object details, left-click on the source.
+      To go back to the tiled display, right-click anywhere on the window.
+
+
+**PERF:  FPS 0 (Avg)	FPS 1 (Avg)	FPS 2 (Avg)	FPS 3 (Avg)	
+**PERF:  0.00 (0.00)	0.00 (0.00)	0.00 (0.00)	0.00 (0.00)	
+** INFO: <bus_callback:291>: Pipeline ready
+
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin3/GstURIDecodeBin:src_elem
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin1/GstURIDecodeBin:src_elem
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin0/GstURIDecodeBin:src_elem
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin2/GstURIDecodeBin:src_elem
+Opening in BLOCKING MODE 
+Opening in BLOCKING MODE 
+Opening in BLOCKING MODE 
+Opening in BLOCKING MODE 
+** INFO: <bus_callback:277>: Pipeline running
+
+**PERF:  151.20 (201.07)	151.20 (201.07)	151.00 (200.81)	151.20 (201.07)	
+nvstreammux: Successfully handled EOS for source_id=0
+nvstreammux: Successfully handled EOS for source_id=3
+nvstreammux: Successfully handled EOS for source_id=2
+nvstreammux: Successfully handled EOS for source_id=1
+** INFO: <bus_callback:334>: Received EOS. Exiting ...
+
+Quitting
+[NvMultiObjectTracker] De-initialized
+App run successful
