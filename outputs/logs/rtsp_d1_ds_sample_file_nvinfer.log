@@ -1,0 +1,75 @@
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.082: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfluidsynthmidi.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.140: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenmpt.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.157: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlame.so': libmp3lame.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.167: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtsdec.so': libdca.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.205: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpulseaudio.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.310: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstresindvd.so': libdvdnav.so.4: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.325: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpg123.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.337: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdread.so': libdvdread.so.8: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.393: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmplex.so': libmjpegutils-2.1.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.409: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsndfile.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.458: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_ucx.so': libucs.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.469: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_inferserver.so': libtritonserver.so: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:33): GStreamer-WARNING **: 17:05:42.797: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_udp.so': librivermax.so.1: cannot open shared object file: No such file or directory
+0:00:01.504024933 [36m   29[00m 0x602f070e02e0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2097> [UID = 1]: deserialize engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine failed
+0:00:01.504059999 [36m   29[00m 0x602f070e02e0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2202> [UID = 1]: deserialize backend context from engine from file :/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine failed, try rebuild
+0:00:01.504066690 [36m   29[00m 0x602f070e02e0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2123> [UID = 1]: Trying to create engine from model files
+0:00:36.434182616 [36m   29[00m 0x602f070e02e0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2155> [UID = 1]: serialize cuda engine to file: /opt/nvidia/deepstream/deepstream-8.0/samples/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine successfully
+0:00:36.767889165 [36m   29[00m 0x602f070e02e0 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<primary_gie>[00m [UID 1]: Load new model:/opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/config_infer_primary.txt sucessfully
+Opening in BLOCKING MODE 
+Opening in BLOCKING MODE 
+WARNING: ../nvdsinfer/nvdsinfer_model_builder.cpp:1261 Deserialize engine failed because file path: /opt/nvidia/deepstream/deepstream-8.0/samples/configs/deepstream-app/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine open error
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [FullDims Engine Info]: layers num: 3
+0   INPUT  kFLOAT input_1:0       3x544x960       min: 1x3x544x960     opt: 2x3x544x960     Max: 2x3x544x960     
+1   OUTPUT kFLOAT output_cov/Sigmoid:0 4x34x60         min: 0               opt: 0               Max: 0               
+2   OUTPUT kFLOAT output_bbox/BiasAdd:0 16x34x60        min: 0               opt: 0               Max: 0               
+
+
+Runtime commands:
+	h: Print this help
+	q: Quit
+
+	p: Pause
+	r: Resume
+
+
+**PERF:  FPS 0 (Avg)	FPS 1 (Avg)	
+**PERF:  0.00 (0.00)	0.00 (0.00)	
+** INFO: <bus_callback:291>: Pipeline ready
+
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin0/GstURIDecodeBin:src_elem
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin1/GstURIDecodeBin:src_elem
+Opening in BLOCKING MODE 
+Opening in BLOCKING MODE 
+** INFO: <bus_callback:277>: Pipeline running
+
+**PERF:  31.80 (34.48)	31.80 (34.48)	
+**PERF:  30.00 (32.15)	30.00 (32.15)	
+**PERF:  30.00 (31.41)	30.00 (31.41)	
+**PERF:  30.00 (31.05)	30.00 (31.05)	
+**PERF:  30.00 (27.17)	30.00 (27.17)	
+**PERF:  30.00 (27.60)	30.00 (27.60)	
+**PERF:  30.00 (27.91)	30.00 (27.91)	
+**PERF:  30.00 (28.16)	30.00 (28.16)	
+**PERF:  30.20 (28.37)	30.20 (28.37)	
+nvstreammux: Successfully handled EOS for source_id=0
+nvstreammux: Successfully handled EOS for source_id=1
+** INFO: <bus_callback:334>: Received EOS. Exiting ...
+
+Quitting
+App run successful
