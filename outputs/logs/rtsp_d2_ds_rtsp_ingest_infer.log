@@ -1,0 +1,76 @@
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.621: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfluidsynthmidi.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.641: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenmpt.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.646: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlame.so': libmp3lame.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.649: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtsdec.so': libdca.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.661: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpulseaudio.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.707: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstresindvd.so': libdvdnav.so.4: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.713: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpg123.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.718: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdread.so': libdvdread.so.8: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.739: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmplex.so': libmjpegutils-2.1.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.751: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsndfile.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.772: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_ucx.so': libucs.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.775: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_inferserver.so': libtritonserver.so: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:40): GStreamer-WARNING **: 15:25:39.842: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_udp.so': librivermax.so.1: cannot open shared object file: No such file or directory
+0:00:00.545607379 [36m   35[00m 0x629fb7deeaf0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2097> [UID = 1]: deserialize engine from file :/tmp/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine failed
+0:00:00.545655676 [36m   35[00m 0x629fb7deeaf0 [33;01mWARN   [00m [00m             nvinfer gstnvinfer.cpp:682:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Warning from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2202> [UID = 1]: deserialize backend context from engine from file :/tmp/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine failed, try rebuild
+0:00:00.545664667 [36m   35[00m 0x629fb7deeaf0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2123> [UID = 1]: Trying to create engine from model files
+0:00:31.135111244 [36m   35[00m 0x629fb7deeaf0 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::buildModel() <nvdsinfer_context_impl.cpp:2155> [UID = 1]: serialize cuda engine to file: /opt/nvidia/deepstream/deepstream-8.0/samples/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine successfully
+0:00:31.498891618 [36m   35[00m 0x629fb7deeaf0 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<primary_gie>[00m [UID 1]: Load new model:/opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app/config_infer_primary.txt sucessfully
+WARNING: ../nvdsinfer/nvdsinfer_model_builder.cpp:1261 Deserialize engine failed because file path: /tmp/../../models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b2_gpu0_fp16.engine open error
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [FullDims Engine Info]: layers num: 3
+0   INPUT  kFLOAT input_1:0       3x544x960       min: 1x3x544x960     opt: 2x3x544x960     Max: 2x3x544x960     
+1   OUTPUT kFLOAT output_cov/Sigmoid:0 4x34x60         min: 0               opt: 0               Max: 0               
+2   OUTPUT kFLOAT output_bbox/BiasAdd:0 16x34x60        min: 0               opt: 0               Max: 0               
+
+
+Runtime commands:
+	h: Print this help
+	q: Quit
+
+	p: Pause
+	r: Resume
+
+
+**PERF:  FPS 0 (Avg)	
+**PERF:  0.00 (0.00)	
+** INFO: <bus_callback:291>: Pipeline ready
+
+** INFO: <bus_callback:277>: Pipeline running
+
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, stream-format=(string)raw, codec_data=(buffer)1190'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin0/GstURIDecodeBin:src_elem
+Opening in BLOCKING MODE 
+** INFO: <bus_callback:277>: Pipeline running
+
+**PERF:  17.00 (15.88)	
+**PERF:  30.00 (22.70)	
+**PERF:  30.00 (25.08)	
+**PERF:  30.00 (26.28)	
+**PERF:  30.00 (27.02)	
+**PERF:  30.00 (27.51)	
+**PERF:  30.00 (25.86)	
+**PERF:  30.00 (26.34)	
+**PERF:  30.00 (26.72)	
+**PERF:  30.00 (27.03)	
+**PERF:  30.00 (27.28)	
+**PERF:  30.00 (27.50)	
+**PERF:  30.20 (26.63)	
+**PERF:  29.80 (26.84)	
+**PERF:  30.00 (27.04)	
+**PERF:  30.00 (27.21)	
+**PERF:  30.00 (27.36)	
+**PERF:  30.20 (27.51)	
+**PERF:  29.80 (26.90)	
