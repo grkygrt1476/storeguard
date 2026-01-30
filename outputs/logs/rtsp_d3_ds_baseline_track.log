@@ -1,0 +1,58 @@
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.563: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstfluidsynthmidi.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.627: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstopenmpt.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.644: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlame.so': libmp3lame.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.655: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdtsdec.so': libdca.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.691: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstpulseaudio.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.787: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstresindvd.so': libdvdnav.so.4: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.801: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmpg123.so': libmpg123.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.813: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstdvdread.so': libdvdread.so.8: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.866: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstmplex.so': libmjpegutils-2.1.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.882: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstsndfile.so': libFLAC.so.12: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.927: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_ucx.so': libucs.so.0: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:45.937: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_inferserver.so': libtritonserver.so: cannot open shared object file: No such file or directory
+
+(gst-plugin-scanner:34): GStreamer-WARNING **: 20:24:46.242: Failed to load plugin '/usr/lib/x86_64-linux-gnu/gstreamer-1.0/deepstream/libnvdsgst_udp.so': librivermax.so.1: cannot open shared object file: No such file or directory
+Opening in BLOCKING MODE 
+gstnvtracker: Loading low-level lib at /opt/nvidia/deepstream/deepstream/lib/libnvds_nvmultiobjecttracker.so
+[NvMultiObjectTracker] Initialized
+0:00:01.846247052 [36m   29[00m 0x572a976bba30 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::deserializeEngineAndBackend() <nvdsinfer_context_impl.cpp:2109> [UID = 1]: deserialized trt engine from :/workspace/storeguard/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b1_gpu0_fp16.engine
+0:00:01.846293742 [36m   29[00m 0x572a976bba30 [36mINFO   [00m [00m             nvinfer gstnvinfer.cpp:685:gst_nvinfer_logger:<primary_gie>[00m NvDsInferContext[UID 1]: Info from NvDsInferContextImpl::generateBackendContext() <nvdsinfer_context_impl.cpp:2212> [UID = 1]: Use deserialized engine model: /workspace/storeguard/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b1_gpu0_fp16.engine
+0:00:01.850799537 [36m   29[00m 0x572a976bba30 [36mINFO   [00m [00m             nvinfer gstnvinfer_impl.cpp:343:notifyLoadModelStatus:<primary_gie>[00m [UID 1]: Load new model:/workspace/storeguard/config/_baseline_infer_primary.txt sucessfully
+INFO: ../nvdsinfer/nvdsinfer_model_builder.cpp:363 [Implicit Engine Info]: layers num: 0
+
+
+Runtime commands:
+	h: Print this help
+	q: Quit
+
+	p: Pause
+	r: Resume
+
+** INFO: <bus_callback:291>: Pipeline ready
+
+WARNING from src_elem: No decoder available for type 'audio/mpeg, mpegversion=(int)4, framed=(boolean)true, stream-format=(string)raw, level=(string)2, base-profile=(string)lc, profile=(string)lc, codec_data=(buffer)119056e500, rate=(int)48000, channels=(int)2'.
+Debug info: ../gst/playback/gsturidecodebin.c(1003): unknown_type_cb (): /GstPipeline:pipeline/GstBin:multi_src_bin/GstBin:src_sub_bin0/GstURIDecodeBin:src_elem
+Opening in BLOCKING MODE 
+** INFO: <bus_callback:277>: Pipeline running
+
+
+**PERF:  FPS 0 (Avg)	
+**PERF:  280.20 (377.47)	
+nvstreammux: Successfully handled EOS for source_id=0
+** INFO: <bus_callback:334>: Received EOS. Exiting ...
+
+Quitting
+[NvMultiObjectTracker] De-initialized
+App run successful

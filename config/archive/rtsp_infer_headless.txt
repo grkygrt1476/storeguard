@@ -1,0 +1,51 @@
+# config/rtsp_infer_headless.txt
+# 목적: RTSP ingest -> nvstreammux(batch=1) -> nvinfer(primary) -> headless(fakesink)
+# 실행 전제: deepstream 컨테이너에서 동작 (아래 run 명령 참고)
+
+[application]
+enable-perf-measurement=1
+perf-measurement-interval-sec=5
+
+[source0]
+enable=1
+# (중요) source2 샘플과 같은 "URI source" 타입을 가정
+# file://, rtsp:// 모두 URI로 처리되는 타입(보통 3)로 두는게 안전함
+type=3
+uri=rtsp://mediamtx:8554/storeguard
+# RTSP면 live 성격이라 아래 streammux live-source=1 과 짝
+# (옵션) RTSP 끊김 대비. 필요하면 나중에 켜도 됨
+# rtsp-reconnect-interval-sec=10
+# rtsp-reconnect-attempts=-1
+
+[streammux]
+gpu-id=0
+live-source=1
+batch-size=1
+batched-push-timeout=33000
+width=1920
+height=1080
+nvbuf-memory-type=0
+
+[primary-gie]
+enable=1
+gpu-id=0
+gie-unique-id=1
+# (핵심) config-file은 절대경로로 고정 (상대경로 깨짐 방지)
+config-file=/opt/nvidia/deepstream/deepstream/samples/configs/deepstream-app/config_infer_primary.txt
+# (선택) 엔진도 절대경로로 고정해서 /tmp/../../models 경고 없애기
+model-engine-file=/opt/nvidia/deepstream/deepstream/samples/models/Primary_Detector/resnet18_trafficcamnet_pruned.onnx_b1_gpu0_fp16.engine
+batch-size=1
+interval=0
+nvbuf-memory-type=0
+
+[osd]
+enable=0
+
+[sink0]
+enable=1
+# headless: fakesink
+type=1
+sync=0
+
+[tests]
+file-loop=0
