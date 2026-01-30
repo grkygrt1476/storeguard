@@ -21,12 +21,18 @@ This document is a reproducible debug log for:
   - `--network ds-rtsp`
 
 ## Evidence (expected outputs)
-- Video: `outputs/videos/_verify_tracker_overlay_check.mkv` (non-0B, playable)
-- Frames:
-  - `outputs/videos/_verify_frame0.png`
-  - `outputs/videos/_verify_frame60.png`
-  - `outputs/videos/_verify_frame120.png`
-- Log (example): `outputs/logs/verify_tracker_overlay_<timestamp>.log`
+- Video: `outputs/videos/_verify_tracker_overlay_check.mkv` (playable)
+<p align="center">
+  <img src="outputs/videos/_verify_frame0.png" width="720" />
+</p>
+<p align="center">
+  <img src="outputs/videos/_verify_frame60.png" width="720" />
+</p>
+<p align="center">
+  <img src="outputs/videos/_verify_frame120.png" width="720" />
+</p>
+
+- Log (example): `outputs/logs/rtsp_<day>_<feature>.log`
 
 ## Step 1) Copy baseline configs from DeepStream container
 - Copy these files into repo `config/`:
